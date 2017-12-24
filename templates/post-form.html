@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% block title %}信息管理部个人汇报填写{% endblock %}
+{% load staticfiles %}
+    {% block content %}
+
+   <div class="row">
+
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title am-fl">线条表单</div>
+                                <div class="widget-function am-fr">
+                                    <a href="javascript:;" class="am-icon-cog"></a>
+                                </div>
+                            </div>
+                            <div class="widget-body am-fr">
+
+                                <form class="am-form tpl-form-line-form" id="jsStayForm">
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">汇报填写人</label>
+                                        <div class="am-u-sm-9">
+                                            <input type="text" name="user_name" class="tpl-form-input" placeholder="{{ request.user.username }}">
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">汇报标题 </label>
+                                        <div class="am-u-sm-9">
+                                            <input type="text" name="title" class="tpl-form-input"  placeholder="请输入汇报标题">
+                                            <small>请填写标题文字2-20字左右。</small>
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">所属项目</label>
+                                        <div class="am-u-sm-9">
+                                        <select data-am-selected="{btnSize: 'sm'}">
+                                            {% for PortProject in all_PortProject %}
+                                                <option value="{{ PortProject.name }}">{{ PortProject.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    </div>
+
+                                    <div class="am-form-group">
+                                        <label for="user-weibo" class="am-u-sm-3 am-form-label">标签</label>
+                                        {% for tag in all_tag %}
+                                        <label class="am-checkbox-inline">
+
+    <input type="checkbox"  value="" data-am-ucheck> {{ tag.name }}
+
+  </label>
+                                        {% endfor %}
+                                        </div>
+
+
+
+
+                                    <div class="am-form-group">
+                                        <label for="user-intro" class="am-u-sm-3 am-form-label">汇报内容</label>
+                                        <div class="am-u-sm-9">
+                                            <textarea class="" name="detail" rows="10" id="user-intro" placeholder="请输入汇报内容"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="am-form-group">
+                                        <div class="am-u-sm-9 am-u-sm-push-3">
+                                            <button type="button" class="am-btn am-btn-primary tpl-btn-bg-color-success " id="jsStayBtn">提交</button>
+                                        </div>
+                                    </div>
+                                    <p class="" id="jsCompanyTips"></p>
+                                    {% csrf_token %}
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+{% endblock %}
+
+{% block custom_js %}
+<script>
+    $(function(){
+        $('#jsStayBtn').on('click', function(){
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url:"{% url "rep:add_form" %}",
+                data:$('#jsStayForm').serialize(),
+                async: true,
+                success: function(data) {
+                    if(data.status == 'success'){
+                        $('#jsStayForm')[0].reset();
+                        alert("提交成功")
+                    }else if(data.status == 'fail'){
+                        $('#jsCompanyTips').html(data.msg)
+                    }
+                },
+            });
+        });
+    })
+
+</script>
+{% endblock %}

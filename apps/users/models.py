@@ -5,8 +5,10 @@ from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 class UserProfile(AbstractUser):
-    nick_name = models.CharField(max_length=50 , verbose_name="昵称" , default="")
+    nick_name = models.CharField(max_length=50 , verbose_name="昵称" , default="",null=True, blank=True)
     birthday = models.DateField(verbose_name="生日" , null=True , blank=True)
+    employee_id = models.CharField(max_length=15 , verbose_name="员工编号", null=True, blank=True)
+
 
     class Meta:
         verbose_name = "职工信息"

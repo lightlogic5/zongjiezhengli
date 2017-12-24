@@ -34,6 +34,10 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
+# 配置可以使用邮箱登录的类
+AUTHENTICATION_BACKENDS = (
+    'users.views.CustomBackend',
+)
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -47,6 +51,7 @@ INSTALLED_APPS = [
     'operations',
     'xadmin',
     'crispy_forms',
+    'DjangoUeditor',
 ]
 AUTH_USER_MODEL = "users.UserProfile"
 MIDDLEWARE_CLASSES = [
@@ -136,3 +141,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
