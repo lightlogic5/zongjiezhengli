@@ -28,7 +28,7 @@ from operations.views import ReportView
 urlpatterns = [
     url(r'^xadmin/', xadmin.site.urls),
 
-    url('^index/$', TemplateView.as_view(template_name="index.html"),name="index"),
+    url('^$', TemplateView.as_view(template_name="index.html"),name="index"),
     # url(r'^login/$', TemplateView.as_view(template_name="login.html"),name="login"),
     # url(r'^login/$', user_login ,name="login"),
     # 将class转换为as_view,并返回函数句柄

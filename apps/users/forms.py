@@ -10,6 +10,6 @@ class LoginForm(forms.Form):
 
 
 class RegisterForm(forms.Form):
-    employee = forms.CharField(required=True, max_length=5)
+    employee = forms.CharField(required=True, min_length=5)
     username = forms.CharField(required=True)
     password = forms.CharField(required=True, min_length=5)
